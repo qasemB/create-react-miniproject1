@@ -10,14 +10,12 @@ class Timer extends React.Component{
       time : new Date().toLocaleTimeString()
     }
   }
-  componentDidMount(){
-      setInterval(()=>{
-        this.setState({
-          time:new Date().toLocaleTimeString()
-        })
-      } , 1000)
-  }
   render(){
+    setInterval(()=>{
+      this.setState({
+        time:new Date().toLocaleTimeString()
+      })
+    } , 1000)
     return(
       <h2 className="timer">
         it is {this.state.time}
