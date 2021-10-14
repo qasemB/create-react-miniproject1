@@ -24,3 +24,39 @@ body{
     background: black;
     color: chocolate;
 }
+
+.button_box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.action_button{
+    display: block;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: blanchedalmond;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 3px;
+    color: #ffffff;
+    background-color: green;
+    cursor: pointer;
+    transition: all 200ms ease;
+}
+
+
+.stop_burtton{
+    background-color: red;
+}
+
+.reset_burtton{
+    background-color: gray;
+}
+
+.action_button:hover{
+    box-shadow: 0 0 5px white;
+    letter-spacing: 5px;
+}
