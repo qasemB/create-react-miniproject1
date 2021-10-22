@@ -23,6 +23,12 @@ body{
     display: flex;
     background: black;
     color: chocolate;
+    transition: all 200ms ease;
+    cursor: pointer;
+}
+
+.timer:hover{
+    box-shadow: 0 0 8px rgb(146, 240, 216);
 }
 
 .button_box{
