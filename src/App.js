@@ -5,6 +5,7 @@ import './style.css'
 import Hello from './Hello';
 import Timer from './Timer';
 import TimeList from './TimeList';
+import { TestContext } from './testContext';
 
 const App = ()=>{
     const [title , setTitle] = useState("سلام دوستان عزیزم");
@@ -23,14 +24,17 @@ const App = ()=>{
     }
 
     return (
-        <div className="main" style={{background:isLight ? "white" : "black" }}>
-            <Hello title={title}/>        
-            <Timer 
-            timeArr ={timeArr}
-            setTimeArr ={setTimeArr}
-            isLight={isLight} 
-            handleSetIsLight={handleSetIsLight}/>
-        </div>
+        <TestContext.Provider value={{
+            timeArr:timeArr,
+            setTimeArr:setTimeArr
+            }}>
+            <div className="main" style={{background:isLight ? "white" : "black" }}>
+                <Hello title={title}/>        
+                <Timer 
+                isLight={isLight} 
+                handleSetIsLight={handleSetIsLight}/>
+            </div>
+        </TestContext.Provider>
     ) 
 }
 

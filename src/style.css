@@ -66,3 +66,18 @@ body{
     box-shadow: 0 0 5px white;
     letter-spacing: 5px;
 }
+
+.main_time_list{
+    margin-top: 0.5rem;
+}
+
+.time_item{
+    font-family: fantasy;
+    letter-spacing: 3px;
+    padding: 0.3rem 0;
+    cursor: pointer;
+    transition: all 300ms ease;
+}
+.time_item:hover{
+    filter: drop-shadow(0 0 5px orange);
+}

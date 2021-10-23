@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import './style.css'
+import { TestContext } from './testContext';
 import TimeList from './TimeList';
 
 var interval;
@@ -16,6 +17,8 @@ class Timer extends React.Component{
       isStart:false
     }
   }
+
+  static contextType = TestContext;
 
   startInterval = ()=>{
     if (this.state.isStart == false) {
@@ -63,7 +66,7 @@ class Timer extends React.Component{
     let m = this.state.minute
     let s = this.state.second
     let newTime = `${h > 9 ? h : "0"+h} : ${m > 9 ? m : "0"+m} : ${s > 9 ? s : "0"+s}`
-    this.props.setTimeArr([...this.props.timeArr , newTime])
+    this.context.setTimeArr([...this.context.timeArr , newTime])
   }
 
   render(){
@@ -72,7 +75,7 @@ class Timer extends React.Component{
     let s = this.state.second
     return(
       <>
-        <h2 className="timer" onClick={this.handleSaveTime}>
+        <h2 className="timer" onClick={this.handleSaveTime} style={{color:this.context}}>
           {`${h > 9 ? h : "0"+h} : ${m > 9 ? m : "0"+m} : ${s > 9 ? s : "0"+s}`}
         </h2>
         <div className="button_box">
@@ -92,7 +95,7 @@ class Timer extends React.Component{
 
         </div>
         <TimeList>
-                {this.props.timeArr}
+            {this.context.timeArr}
         </TimeList>
       </>
     )
