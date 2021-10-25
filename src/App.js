@@ -25,14 +25,15 @@ const App = ()=>{
 
     return (
         <TestContext.Provider value={{
-            timeArr:timeArr,
-            setTimeArr:setTimeArr
+            timeArr,
+            setTimeArr
             }}>
             <div className="main" style={{background:isLight ? "white" : "black" }}>
                 <Hello title={title}/>        
                 <Timer 
                 isLight={isLight} 
                 handleSetIsLight={handleSetIsLight}/>
+                <TimeList />
             </div>
         </TestContext.Provider>
     ) 

@@ -62,10 +62,7 @@ class Timer extends React.Component{
   }
 
   handleSaveTime = ()=>{
-    let h = this.state.hour
-    let m = this.state.minute
-    let s = this.state.second
-    let newTime = `${h > 9 ? h : "0"+h} : ${m > 9 ? m : "0"+m} : ${s > 9 ? s : "0"+s}`
+    let newTime = document.querySelector('.timer').innerHTML;
     this.context.setTimeArr([...this.context.timeArr , newTime])
   }
 
@@ -75,7 +72,7 @@ class Timer extends React.Component{
     let s = this.state.second
     return(
       <>
-        <h2 className="timer" onClick={this.handleSaveTime} style={{color:this.context}}>
+        <h2 className="timer" onClick={this.handleSaveTime}>
           {`${h > 9 ? h : "0"+h} : ${m > 9 ? m : "0"+m} : ${s > 9 ? s : "0"+s}`}
         </h2>
         <div className="button_box">
@@ -92,11 +89,7 @@ class Timer extends React.Component{
           >
             {this.props.isLight ? "dark" : "light" }
           </span>
-
         </div>
-        <TimeList>
-            {this.context.timeArr}
-        </TimeList>
       </>
     )
   }
