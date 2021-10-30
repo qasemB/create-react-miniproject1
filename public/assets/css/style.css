@@ -1,26 +1,43 @@
+@font-face {
+    font-family: "BYekan";
+    src: url("../fonts/BYekan-webfont.eot") format("eot"), url("../fonts/BYekan-webfont.woff") format("woff"), url("../fonts/BYekan-webfont.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+html , #root{
+    height: 100%;
+}
 body{
+    direction: rtl;
     margin: 0;
     padding: 0;
-}
-.main{
     width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background: black;
-    color: chocolate;
+    height: 100%;
+    background: rgb(9, 185, 103);
+    background: linear-gradient(90deg, rgb(9, 187, 104) 0%, hsla(186, 100%, 69%, 1) 100%);
+    background: -moz-linear-gradient(90deg, rgb(7, 190, 105) 0%, hsla(186, 100%, 69%, 1) 100%);
 }
 
-.timer{
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    box-shadow: 0 0 20px rgb(146, 240, 216);
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    background: black;
-    color: chocolate;
+*{
+    font-family: BYekan;
+    direction: rtl;
+    text-align: right;
+}
+
+.pointer{
+    cursor: pointer !important;
+}
+
+.transition_200{
+    transition: all 200ms ease;
+}
+.text_hover_shadow:hover{
+    text-shadow: 0 0 3px black;
+}
+.text_shdow{
+    text-shadow: 0 0 8px rgb(14, 215, 241);
+}
+
+.h_fit{
+    height: fit-content;
 }

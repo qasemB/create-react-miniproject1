@@ -1,41 +1,17 @@
-import React , {useEffect, useState} from 'react';
-import ReactDOM from 'react-dom';
-import './style.css'
-
-import Hello from './Hello';
-import Timer from './Timer';
-import TimeList from './TimeList';
-import { TestContext } from './testContext';
+import React from 'react';
+import TopForm from './TopForm';
+import TaskItems from './TaskItems';
 
 const App = ()=>{
-    const [title , setTitle] = useState("سلام دوستان عزیزم");
-    const [isLight , setIsLight] = useState(false);
-    const [timeArr , setTimeArr] = useState(["00 : 05 : 12" , "00 : 06 : 32"]);
-    
-    useEffect(()=>{
-        console.log("useEffect");
-        return ()=>{
-            
-        }
-    },[isLight])
-
-    const handleSetIsLight = ()=>{
-        setIsLight(!isLight)
-    }
-
     return (
-        <TestContext.Provider value={{
-            timeArr,
-            setTimeArr
-            }}>
-            <div className="main" style={{background:isLight ? "white" : "black" }}>
-                <Hello title={title}/>        
-                <Timer 
-                isLight={isLight} 
-                handleSetIsLight={handleSetIsLight}/>
-                <TimeList />
+        <div className="container w-100 h-100 p-3">
+            <div className="row h-100 justify-content-center align-align-items-start">
+                <div className="col-12 col-md-8 col-lg-6 bg-light shadow rounded-3 p-3 h_fit">
+                    <TopForm />
+                    <TaskItems />
+                </div>
             </div>
-        </TestContext.Provider>
+        </div>
     ) 
 }
 
