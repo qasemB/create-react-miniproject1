@@ -13,6 +13,7 @@ const TopForm = ()=>{
     const handleAddTask = (event)=>{
         event.preventDefault()
         setTaskItems([...taskItems , {id:Math.random() , title:task , done:false}])
+        setTask("")
     }
 
     return(
