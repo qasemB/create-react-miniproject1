@@ -14,10 +14,10 @@ const Sidebar = ()=>{
                     <img src="/assets/images/user2.jpg" alt="" />
                 </li>
                 <li>
-                    <Link to="/">کاربران</Link>
+                    <Link to="/user">کاربران</Link>
                 </li>
                 <li>
-                    <Link to="/posts">پست ها</Link>
+                    <Link to="/post">پست ها</Link>
                 </li>
                 <li>
                     <Link to="/gallery">گالری</Link>

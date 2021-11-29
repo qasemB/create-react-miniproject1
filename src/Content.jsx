@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { Route , Routes } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Route , Routes , Navigate} from 'react-router-dom';
 import { MainContext } from './contexts/MainContext';
 import Gallery from './gallery/Gallery';
 import Posts from './posts/Posts';
@@ -10,6 +10,7 @@ import Users from './users/Users';
 const Content = ()=>{
 
     const {showMenu,setShowMenu} = useContext(MainContext)
+    const [isUser , setIsUser] = useState(false);
 
     const handleShowMenu = (event)=>{
         event.stopPropagation()
@@ -23,10 +24,12 @@ const Content = ()=>{
             onClick={handleShowMenu}
             ></i>
                 <Routes>
-                    <Route path="/" element={<Users/>} />
-                    <Route path="/posts" element={<Posts/>} />
+                    {/* <Route path="/" element={<Navigate replace to="/gallery"/>} /> */}
+                    <Route path="/user" element={<Users/>} />
+                    <Route path="/post" element={<Posts/>} />
                     <Route path="/gallery" element={<Gallery/>} />
                     <Route path="/todo" element={<Todos/>} />
+                    <Route path="*" element={<Users/>} />
                 </Routes>
             
         </div>
