@@ -12,13 +12,15 @@ const Users = ()=>{
             title: "حذف رکورد !",
             text: `آیا از حذف رکورد ${itemId} اطمینان دارید؟`,
             icon: "warning",
-            buttons: true,
+            buttons: ["خیر" , "بله"],
             dangerMode: true,
           })
           .then((willDelete) => {
             if (willDelete) {
               swal("حذف با موفقیت انجام شد", {
                 icon: "success",
+                buttons: "متوجه شدم",
+
               });
             } else {
               swal("شما از حذف رکورد منصرف شدید");
