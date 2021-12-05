@@ -1,10 +1,30 @@
 import React from 'react';
 import { Link , useNavigate} from 'react-router-dom';
-import style from '../style.module.css'
+import style from '../style.module.css';
+import swal from 'sweetalert';
 
 const Users = ()=>{
 
     const navigate = useNavigate();
+
+    const handleDelete = (itemId)=>{
+        swal({
+            title: "حذف رکورد !",
+            text: `آیا از حذف رکورد ${itemId} اطمینان دارید؟`,
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              swal("حذف با موفقیت انجام شد", {
+                icon: "success",
+              });
+            } else {
+              swal("شما از حذف رکورد منصرف شدید");
+            }
+          });
+    }
 
     return (
         <div className={`${style.item_content} mt-5 p-4 container-fluid`}>
@@ -14,7 +34,7 @@ const Users = ()=>{
                     <input type="text" className="form-control shadow" placeholder="جستجو"/>
                 </div>
                 <div className="col-2 text-start px-0">
-                    <Link to="/user/add">
+                    <Link to="/user/add" state={"vue"}>
                         <button className="btn btn-success">
                             <i className="fas fa-plus text-light"></i>
                         </button>
@@ -39,9 +59,17 @@ const Users = ()=>{
                         <td>mahdicmptr@gmail.com</td>
                         <td>
                             <i className="fas fa-edit text-warning mx-2 pointer"
-                            onClick={()=>navigate("/user/add/2")}
+                            onClick={()=>navigate("/user/add/2" , {
+                                state : 
+                                    {
+                                        x: "react",
+                                        y:"angular"
+                                    }
+                                })}
                             ></i>
-                            <i className="fas fa-trash text-danger mx-2 pointer"></i>
+                            <i className="fas fa-trash text-danger mx-2 pointer"
+                            onClick={()=>handleDelete(1)}
+                            ></i>
                         </td>
                     </tr>
                 </tbody>
