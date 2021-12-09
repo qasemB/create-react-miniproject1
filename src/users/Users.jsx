@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link , useNavigate} from 'react-router-dom';
 import style from '../style.module.css';
 import swal from 'sweetalert';
+import axios from 'axios';
 
 const Users = ()=>{
 
     const navigate = useNavigate();
+    const [users , setUsers] = useState([]);
+
+    useEffect(() => {
+        axios.get('https://jsonplaceholder.typicode.com/users').then(res=>{
+            setUsers(res.data);
+        }).catch(err=>{
+            console.log(err);
+        })
+    }, []);
 
     const handleDelete = (itemId)=>{
         swal({
@@ -43,6 +53,7 @@ const Users = ()=>{
                     </Link>
                 </div>
             </div>
+            {users.length ? (
             <table className="table bg-light shadow">
                 <thead>
                     <tr>
@@ -54,11 +65,12 @@ const Users = ()=>{
                     </tr>
                 </thead>
                 <tbody>
+                   {users.map(u => (
                     <tr>
-                        <td>1</td>
-                        <td>qasem</td>
-                        <td>qasemB</td>
-                        <td>mahdicmptr@gmail.com</td>
+                        <td>{u.id}</td>
+                        <td>{u.name}</td>
+                        <td>{u.username}</td>
+                        <td>{u.email}</td>
                         <td>
                             <i className="fas fa-edit text-warning mx-2 pointer"
                             onClick={()=>navigate("/user/add/2" , {
@@ -74,8 +86,13 @@ const Users = ()=>{
                             ></i>
                         </td>
                     </tr>
+                   ))}
                 </tbody>
             </table>
+            ) : (
+                <h4 className="text-center text-info">لطفا صبر کنید...</h4>
+            )}
+
         </div>
     )
 
