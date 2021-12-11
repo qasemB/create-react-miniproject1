@@ -10,11 +10,98 @@ const Users = ()=>{
     const [users , setUsers] = useState([]);
 
     useEffect(() => {
-        axios.get('https://jsonplaceholder.typicode.com/users').then(res=>{
-            setUsers(res.data);
-        }).catch(err=>{
-            console.log(err);
-        })
+
+
+
+
+
+
+
+
+
+        // const func = ()=>{
+        //     return new Promise((resolve , reject)=>{
+
+        //         console.log(1);
+    
+        //         setTimeout(()=>{
+        //             console.log(2);
+        //             resolve(true)
+        //         } , 1000)
+    
+        //     })
+        // }
+
+        // const test = async ()=>{
+        //     const res = await func();
+
+        //     if (res) {
+        //         console.log(3);
+        //     }
+        // }
+
+        // test();
+
+// -------------------------------------
+        const prom = (id)=>{
+            return axios.get(`https://jsonplaceholder.typicode.com/users/${id}`)
+        }
+
+        const func = async (id)=>{
+
+            const res = await prom(id);
+            console.log(res.data);
+
+            // await prom(id).then(res=>{
+            //     console.log(res.data);
+            // });
+            console.log(id);
+        }
+
+        // const test = (id)=>{
+        //     axios.get(`https://jsonplaceholder.typicode.com/users/${id}`).then(res=>{
+        //         console.log(res.data);
+        //     });
+        //     console.log(id);
+        // }
+
+        
+        for (const item of [1,2,3,4,5,6]) {
+
+            func(item);
+
+        }
+
+
+
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // axios.get('https://jsonplaceholder.typicode.com/users').then(res=>{
+        //     setUsers(res.data);
+        // }).catch(err=>{
+        //     console.log(err);
+        // })
     }, []);
 
     const handleDelete = (itemId)=>{
@@ -66,7 +153,7 @@ const Users = ()=>{
                 </thead>
                 <tbody>
                    {users.map(u => (
-                    <tr>
+                    <tr key={u.id}>
                         <td>{u.id}</td>
                         <td>{u.name}</td>
                         <td>{u.username}</td>
