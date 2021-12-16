@@ -10,98 +10,11 @@ const Users = ()=>{
     const [users , setUsers] = useState([]);
 
     useEffect(() => {
-
-
-
-
-
-
-
-
-
-        // const func = ()=>{
-        //     return new Promise((resolve , reject)=>{
-
-        //         console.log(1);
-    
-        //         setTimeout(()=>{
-        //             console.log(2);
-        //             resolve(true)
-        //         } , 1000)
-    
-        //     })
-        // }
-
-        // const test = async ()=>{
-        //     const res = await func();
-
-        //     if (res) {
-        //         console.log(3);
-        //     }
-        // }
-
-        // test();
-
-// -------------------------------------
-        const prom = (id)=>{
-            return axios.get(`https://jsonplaceholder.typicode.com/users/${id}`)
-        }
-
-        const func = async (id)=>{
-
-            const res = await prom(id);
-            console.log(res.data);
-
-            // await prom(id).then(res=>{
-            //     console.log(res.data);
-            // });
-            console.log(id);
-        }
-
-        // const test = (id)=>{
-        //     axios.get(`https://jsonplaceholder.typicode.com/users/${id}`).then(res=>{
-        //         console.log(res.data);
-        //     });
-        //     console.log(id);
-        // }
-
-        
-        for (const item of [1,2,3,4,5,6]) {
-
-            func(item);
-
-        }
-
-
-
-        
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // axios.get('https://jsonplaceholder.typicode.com/users').then(res=>{
-        //     setUsers(res.data);
-        // }).catch(err=>{
-        //     console.log(err);
-        // })
+        axios.get('https://jsonplaceholder.typicode.com/users').then(res=>{
+            setUsers(res.data);
+        }).catch(err=>{
+            console.log(err);
+        })
     }, []);
 
     const handleDelete = (itemId)=>{
@@ -114,11 +27,29 @@ const Users = ()=>{
           })
           .then((willDelete) => {
             if (willDelete) {
-              swal("حذف با موفقیت انجام شد", {
-                icon: "success",
-                buttons: "متوجه شدم",
 
-              });
+                axios({
+                    method:"DELETE",
+                    url:`https://jsonplaceholder.typicode.com/users/${itemId}`
+                }).then(res=>{
+
+                    if (res.status == 200) {
+                        const newUsers = users.filter(u=>u.id != itemId);
+                        setUsers(newUsers);
+                        swal("حذف با موفقیت انجام شد", {
+                            icon: "success",
+                            buttons: "متوجه شدم",            
+                        });
+                    }else{
+                        swal("عملیات با خطا مواجه شد",{
+                            icon:"error",
+                            button:"متوجه شدم"
+                        });
+                    }
+
+                })
+
+
             } else {
               swal("شما از حذف رکورد منصرف شدید");
             }
@@ -169,7 +100,7 @@ const Users = ()=>{
                                 })}
                             ></i>
                             <i className="fas fa-trash text-danger mx-2 pointer"
-                            onClick={()=>handleDelete(1)}
+                            onClick={()=>handleDelete(u.id)}
                             ></i>
                         </td>
                     </tr>
