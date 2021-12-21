@@ -1,12 +1,12 @@
-import React , {useState} from 'react';
+import React , {useEffect, useState} from 'react';
 import { useParams , Outlet, useNavigate, useLocation } from 'react-router';
 import style from '../style.module.css'
 import axios from 'axios'
+import swal from 'sweetalert';
 
 const AddUser = ()=>{
 
     const {userId} = useParams();
-    const params = useLocation();
     const navigate = useNavigate();
 
     const [data , setData] = useState({
@@ -23,10 +23,45 @@ const AddUser = ()=>{
 
     const handleAddUser = (e)=>{
         e.preventDefault();
-        axios.post('https://jsonplaceholder.typicode.com/users' , data).then(res=>{
-            console.log(res);
-        });
+
+        if (!userId) {
+            axios.post('https://jsonplaceholder.typicode.com/users' , data).then(res=>{
+                console.log(res);
+                swal(`${res.data.name} با موفقیت ایجاد شد`, {
+                    icon: "success",
+                    buttons: "متوجه شدم",            
+                });
+            });
+        }else{
+            axios.put(`https://jsonplaceholder.typicode.com/users/${userId}` , data).then(res=>{
+                console.log(res);
+                swal(`${res.data.name} با موفقیت ویرایش شد`, {
+                    icon: "success",
+                    buttons: "متوجه شدم",            
+                });
+            });
+        }
+
     }
+
+    useEffect(()=>{
+
+        axios.get(`https://jsonplaceholder.typicode.com/users/${userId}`).then(res=>{
+            setData({
+                name: res.data.name ,
+                username : res.data.username ,
+                email : res.data.email,
+                address : {
+                    street: res.data.address.street ,
+                    city: res.data.address.city ,
+                    suite: res.data.address.suite ,
+                    zipcode: res.data.address.zipcode 
+                }
+            })
+        });
+
+
+    },[])
 
 
 
