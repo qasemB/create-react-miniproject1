@@ -2,7 +2,7 @@ import React , {useEffect, useState} from 'react';
 import { useParams , Outlet, useNavigate, useLocation } from 'react-router';
 import style from '../style.module.css'
 import axios from 'axios'
-import swal from 'sweetalert';
+import { setUserService, updateUserService } from '../services/UserService';
 
 const AddUser = ()=>{
 
@@ -21,30 +21,25 @@ const AddUser = ()=>{
         }
     })
 
+
+
     const handleAddUser = (e)=>{
         e.preventDefault();
-
         if (!userId) {
-            axios.post('https://jsonplaceholder.typicode.com/users' , data).then(res=>{
-                console.log(res);
-                swal(`${res.data.name} با موفقیت ایجاد شد`, {
-                    icon: "success",
-                    buttons: "متوجه شدم",            
-                });
-            });
+            setUserService(data);
         }else{
-            axios.put(`https://jsonplaceholder.typicode.com/users/${userId}` , data).then(res=>{
-                console.log(res);
-                swal(`${res.data.name} با موفقیت ویرایش شد`, {
-                    icon: "success",
-                    buttons: "متوجه شدم",            
-                });
-            });
+            updateUserService(data , userId);
         }
-
     }
 
     useEffect(()=>{
+
+        // axios.all([
+        //     axios.get(`https://jsonplaceholder.typicode.com/users`) ,
+        //     axios.get(`https://jsonplaceholder.typicode.com/todos`) ,        
+        // ]).then(res=>{
+        //     console.log(res);
+        // })
 
         axios.get(`https://jsonplaceholder.typicode.com/users/${userId}`).then(res=>{
             setData({
