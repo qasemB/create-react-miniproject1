@@ -46,3 +46,23 @@ body{
     background-color: #ffffff6b !important;
     color: black;
 }
+
+.modal_base{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background: #00000085;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal_base .modal_box{
+    background: white;
+    width: 50%;
+    height: 50%;
+    padding: 1rem;
+    border-radius: 2rem;
+    box-shadow: 0 0 20px black;
+}
