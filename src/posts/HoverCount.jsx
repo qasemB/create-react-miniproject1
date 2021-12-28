@@ -12,4 +12,4 @@ const HoverCount = (props)=>{
     )
 }
 
-export default Counter(HoverCount);
+export default Counter(HoverCount , 5);

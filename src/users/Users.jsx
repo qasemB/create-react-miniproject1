@@ -3,12 +3,15 @@ import { Link , useNavigate} from 'react-router-dom';
 import style from '../style.module.css';
 import swal from 'sweetalert';
 import axios from 'axios';
+import WithAlert from '../HOC/WithAlert';
 
-const Users = ()=>{
+const Users = (props)=>{
 
     const navigate = useNavigate();
     const [users , setUsers] = useState([]);
     const [mainUsers , setMainUsers] = useState([]);
+
+    const {Confirm , Alert} = props
 
     useEffect(() => {
         axios.get('https://jsonplaceholder.typicode.com/users').then(res=>{
@@ -19,16 +22,12 @@ const Users = ()=>{
         })
     }, []);
 
-    const handleDelete = (itemId)=>{
-        swal({
-            title: "حذف رکورد !",
-            text: `آیا از حذف رکورد ${itemId} اطمینان دارید؟`,
-            icon: "warning",
-            buttons: ["خیر" , "بله"],
-            dangerMode: true,
-          })
-          .then((willDelete) => {
-            if (willDelete) {
+    const handleDelete = async (itemId)=>{
+
+
+            if (await Confirm(`آیا از حذف رکورد ${itemId} اطمینان دارید؟`)) {
+
+                
 
                 axios({
                     method:"DELETE",
@@ -38,24 +37,18 @@ const Users = ()=>{
                     if (res.status == 200) {
                         const newUsers = users.filter(u=>u.id != itemId);
                         setUsers(newUsers);
-                        swal("حذف با موفقیت انجام شد", {
-                            icon: "success",
-                            buttons: "متوجه شدم",            
-                        });
+                        Alert("حذف با موفقیت انجام شد" , "success")
                     }else{
-                        swal("عملیات با خطا مواجه شد",{
-                            icon:"error",
-                            button:"متوجه شدم"
-                        });
+                        Alert("عملیات با خطا مواجه شد" , "error")
                     }
 
                 })
 
 
             } else {
-              swal("شما از حذف رکورد منصرف شدید");
+                Alert("شما منصرف شدید" , "info")
             }
-          });
+
     }
 
     const handleSearch = (e)=>{
@@ -117,4 +110,4 @@ const Users = ()=>{
 
 }
 
-export default Users;
+export default WithAlert(Users);
