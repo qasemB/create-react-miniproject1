@@ -54,7 +54,6 @@ const Users = (props)=>{
 
     const handleSearch = (e)=>{
         setUsers(mainUsers.filter(u=>u.name.includes(e.target.value)))
-        console.log(e.target.value);
     }
 
     return (
