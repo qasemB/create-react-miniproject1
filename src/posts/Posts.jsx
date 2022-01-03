@@ -7,20 +7,42 @@ import style from '../style.module.css'
 const Posts = ()=>{
 
     const [posts , setPosts] = useState([]);
+    const [mainPosts , setMainPosts] = useState([])
+    const [uId , setUId] = useState("");
+    
     const navigate = useNavigate();
 
-    const handleSearch = ()=>{}
+    const handleSearch = ()=>{
+        if(uId > 0) setPosts(mainPosts.filter(p=>p.userId == uId))
+        else setPosts(mainPosts)
+    }
 
     const handleDelete = (postId)=>{}
 
     const getPosts = async ()=>{
         const res = await getPostsService();
         setPosts(res.data);
+        setMainPosts(res.data);
     }
 
     useEffect(()=>{
+        console.log("first render");
         getPosts();
+
+        return ()=>{
+            console.log("destroy component");
+        }
+
     } , [])
+
+    useEffect(()=>{
+        console.log("evry render");
+    })
+    
+    useEffect(()=>{
+        console.log("evry change uId");
+        handleSearch()
+    } , [uId])
 
     return (
         <div className={`${style.item_content} mt-5 p-4 container-fluid`}>
@@ -28,7 +50,7 @@ const Posts = ()=>{
 
             <div className="row my-2 mb-4 justify-content-between w-100 mx-0">
                 <div className="form-group col-10 col-md-6 col-lg-4">
-                    <input type="text" className="form-control shadow" placeholder="جستجو" onChange={handleSearch}/>
+                    <input type="number" className="form-control shadow" placeholder="جستجو" value={uId} onChange={(e)=>setUId(e.target.value)}/>
                 </div>
                 <div className="col-2 text-start px-0">
                     <Link to="/post/add">
@@ -54,7 +76,7 @@ const Posts = ()=>{
                    {posts.map(u => (
                     <tr key={u.id}>
                         <td>{u.id}</td>
-                        <td>{u.userId}</td>
+                        <td className='text-primary' style={{cursor:"pointer"}} onClick={()=>setUId(u.userId)}>{u.userId}</td>
                         <td>{u.title}</td>
                         <td>{u.body}</td>
                         <td>
