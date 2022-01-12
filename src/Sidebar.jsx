@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { MainContext } from './contexts/MainContext';
-import { Link, NavLink} from 'react-router-dom';
+import { NavLink} from 'react-router-dom';
 import style from './style.module.css';
 
 const Sidebar = ()=>{
 
-    const {showMenu,setShowMenu} = useContext(MainContext)
+    const {showMenu} = useContext(MainContext)
 
     return (
         <div className={`${style.sidebar_section} bg-secondary`} style={showMenu ? {right:0} : {}}>

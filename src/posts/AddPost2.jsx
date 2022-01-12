@@ -1,4 +1,4 @@
-import React , {useEffect, useReducer, useState} from 'react';
+import React , {useEffect, useReducer} from 'react';
 import { useParams, useNavigate} from 'react-router';
 import style from '../style.module.css'
 import axios from 'axios'
