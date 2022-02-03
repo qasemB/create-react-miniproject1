@@ -24,6 +24,10 @@ body{
     text-align: right;
 }
 
+.dir_ltr{
+    direction: ltr !important; 
+}
+
 .pointer{
     cursor: pointer !important;
 }
