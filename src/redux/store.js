@@ -1,8 +1,9 @@
 import { applyMiddleware, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import logger from "redux-logger";
-import rootReducer from "./rootReducer";
+import thunk from "redux-thunk";
+import userReducer from "./user/userReducer";
 
-const store = createStore(rootReducer , composeWithDevTools(applyMiddleware(logger)))
+const store = createStore(userReducer , composeWithDevTools(applyMiddleware(logger , thunk)))
 
-export default store;
+export default store
