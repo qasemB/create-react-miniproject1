@@ -16,7 +16,7 @@ const Weather = () => {
     const handleGetWeather = e=>{
         e.preventDefault()
         dispatch(sendWeatherRequest(query))
-        setQuery('')
+        // setQuery('')
     }
 
     useEffect(()=>{

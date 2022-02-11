@@ -11,6 +11,7 @@ const weatherReducer = (state=init , action)=>{
         case SEND_WEATHER_REQUEST:
             return {...state , loading: true}
         case RECEIVE_WEATHER_RESPONSE:
+            console.log(action.payload);
             return {loading: false , data:action.payload , error:''}
         case RECEIVE_WEATHER_ERROR:
             return {loading: false , data:{} , error:action.payload}
