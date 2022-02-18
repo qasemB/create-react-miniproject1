@@ -13,9 +13,9 @@ body{
     padding: 0;
     width: 100%;
     height: 100%;
-    background: rgb(9, 185, 103);
-    background: linear-gradient(90deg, rgb(9, 187, 104) 0%, hsla(186, 100%, 69%, 1) 100%);
-    background: -moz-linear-gradient(90deg, rgb(7, 190, 105) 0%, hsla(186, 100%, 69%, 1) 100%);
+    background: url(../images/big-back.jpg);
+    background-position: center;
+    background-size: cover;
 }
 
 *{
@@ -51,85 +51,22 @@ body{
     height: fit-content;
 }
 
-.back_cold{
-    background: url(/assets/images/weather/cold.jpg);
-}
-
-.back_warm{
-    background: url(/assets/images/weather/warm.jpg);
-}
-
-.back_usual{
-    background: url(/assets/images/weather/usual.jpg);
-}
-
-@media(max-width:600px){
-    .back_cold{
-        background: url(/assets/images/weather/cold-mini.jpg);
-    }    
-    .back_warm{
-        background: url(/assets/images/weather/warm-mini.jpg);
-    }    
-    .back_usual{
-        background: url(/assets/images/weather/usual-mini.jpg);
-    }
-}
-
-.app{
-    width: 100%;
+.h-100-vh{
     height: 100vh;
-    background-position: center;
-    background-size: cover;
 }
 
-.temprature_box{
-    direction: ltr;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient( 90deg, rgba(195, 224, 209, 0.4), rgba(0, 209, 255, 0.4) );
-    box-shadow: 0 8px 32px 0 rgb(31 38 135 / 37%);
-    backdrop-filter: blur(2px);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    cursor: pointer;
-    transition: all 200ms linear;
-    text-shadow: 0 0 2px black;
-    font-size: 4rem;
+.auth_box{
+   border-radius: 0.5rem;
+   min-height: 50vh;
+   background: rgba(255, 255, 255, 0.486);
+   backdrop-filter: blur(3px);
+   -webkit-backdrop-filter: blur(3px);
+   border: 1px solid rgba(255, 255, 255, 0.18);
+   box-shadow: 0 0 30px rgba(128, 128, 128, 0.219);
 }
 
-.temprature_box span{
-    position: relative;
-    top: -9px;
-    font-size: 5rem;
-}
 
-.search_input{
-    background: transparent;
-    border: transparent;
-    outline: unset;
-    text-align: center;
-    font-size: 2rem;
-    border-radius: 0.5rem;
-    box-shadow: 0px 2px 0px #808080a6;
-    padding: 0.5rem;
-}
 
-.back_cold .text_color ,
-.back_cold .placeholder_color::placeholder{
-    color: #ffffff;
-    text-shadow: 0 0 5px black;
-}    
-.back_warm .text_color ,
-.back_warm .placeholder_color::placeholder{
-    color: #eed284;
-    text-shadow: 0 0 5px black;
-}    
-.back_usual .text_color ,
-.back_usual .placeholder_color::placeholder{
-    color: #175006;
-    text-shadow: 0 0 5px rgb(146, 136, 136);
-}
 
 
 
