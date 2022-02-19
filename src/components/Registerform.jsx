@@ -10,8 +10,25 @@ const Registerform = () => {
         },
         onSubmit: values=>{
             console.log(values);
+        },
+        validate: values=>{
+            let errors = {}
+            if (!values.name) {
+                errors.name = "لطفا این قسمت را پر کنید"
+            }
+            if (!values.email) {
+                errors.email = "لطفا این قسمت را پر کنید"
+            }else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.email)) {
+                errors.email = "لطفا قالب ایمیل را رعایت کنید مثال : aaa@example.bbb"
+            }
+            if (!values.password) {
+                errors.password = "لطفا این قسمت را پر کنید"
+            }
+            return errors;
         }
     })
+
+    console.log(formik);
 
     return (
         <div className='auth_container container-fluid d-flex justify-content-center align-items-center w-100 h-100-vh p-0'>
@@ -24,20 +41,32 @@ const Registerform = () => {
                         <div className="mb-3">
                             <label htmlFor="name" className="form-label">نام</label>
                             <input type="text" className="form-control" id="name" name='name'
-                            value={formik.values.name} onChange={formik.handleChange}
+                            value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur}
                             />
+                            {formik.errors.name && formik.touched.name ? 
+                            <small className='d-block text-center text-danger'>
+                                {formik.errors.name}
+                            </small> : null}
                         </div>
                         <div className="mb-3">
                             <label htmlFor="email" className="form-label">ایمیل</label>
                             <input type="email" className="form-control" id="email" name='email'
-                            value={formik.values.email} onChange={formik.handleChange}
+                            value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur}
                             />
+                            {formik.errors.email && formik.touched.email ? 
+                            <small className='d-block text-center text-danger'>
+                                {formik.errors.email}
+                            </small> : null}
                         </div>
                         <div className="mb-3">
                             <label htmlFor="password" className="form-label">رمز عبور</label>
                             <input type="password" className="form-control" id="password" name='password'
-                            value={formik.values.password} onChange={formik.handleChange}
+                            value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur}
                             />
+                            {formik.errors.password && formik.touched.password ? 
+                            <small className='d-block text-center text-danger'>
+                                {formik.errors.password}
+                            </small> : null}
                         </div>
                         <div className='text-center w-100'>
                             <button type="submit" className="btn btn-primary">ثبت نام</button>
