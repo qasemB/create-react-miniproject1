@@ -1,11 +1,14 @@
 import React from 'react';
 import { ErrorMessage, FastField, Field, Form, Formik, useFormik } from 'formik'
 import * as Yup from 'yup'
+import Personalfield from './PersonalField';
+import Personalerror from './Personalerror';
 
 const initialValues ={
     name: '',
     email: '',
     password: '',
+    bio: '',
 }
 const onSubmit = values=>{
     console.log(values);
@@ -56,18 +59,26 @@ const Registerform = () => {
                             </h1>
                             <div className="mb-3">
                                 <label htmlFor="name" className="form-label">نام</label>
-                                <FastField type="text" className="form-control" id="name" name='name'/>
-                                <ErrorMessage name='name' />
+                                <FastField type="text" className="form-control" id="name" name='name' placeholder="لطفا از حروف لاتین استفاده کنید"/>
+                                <ErrorMessage name='name' component={Personalerror}/>
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="email" className="form-label">ایمیل</label>
                                 <FastField type="email" className="form-control" id="email" name='email'/>
-                                <ErrorMessage name='email' />
+                                <ErrorMessage name='email'>
+                                    {error=> <small className='d-block text-center text-danger'>{error}</small>}
+                                </ErrorMessage>
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="password" className="form-label">رمز عبور</label>
-                                <FastField type="password" className="form-control" id="password" name='password'/>
-                                <ErrorMessage name='password' />
+                                <FastField name='password'>
+                                    {props => <Personalfield {...props}/>}                                    
+                                </FastField>
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="password" className="form-label">بیوگرافی</label>
+                                <FastField type="text" className="form-control" id="bio" name='bio' component="textarea"/>
+                                <ErrorMessage name='bio' />
                             </div>
                             <div className='text-center w-100'>
                                 <button type="submit" className="btn btn-primary">ثبت نام</button>
