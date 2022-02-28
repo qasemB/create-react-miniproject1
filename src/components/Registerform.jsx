@@ -1,14 +1,20 @@
 import React from 'react';
-import { ErrorMessage, FastField, Field, Form, Formik, useFormik } from 'formik'
+import { ErrorMessage, FastField, Field, Form, Formik, FieldArray, useFormik } from 'formik'
 import * as Yup from 'yup'
-import Personalfield from './PersonalField';
 import Personalerror from './Personalerror';
+import FavoritsField from './FavoritsField';
 
 const initialValues ={
     name: '',
     email: '',
     password: '',
     bio: '',
+    address:{
+        city: '',
+        postalCode:''
+    },
+    phone:['' , ''],
+    favorits:['']
 }
 const onSubmit = values=>{
     console.log(values);
@@ -32,17 +38,16 @@ const validationSchema = Yup.object({
     name: Yup.string().required('لطفا این قسمت را پر کنید'),
     email:Yup.string().required('لطفا این قسمت را پر کنید').email("لطفا قالب ایمیل را رعایت کنید مثال : aaa@example.bbb"),
     password: Yup.string().required('لطفا این قسمت را پر کنید').min(8 , 'حد اقل 8 کارکتر وارد کنید'),
+    address: Yup.object({
+        city:Yup.string().required('لطفا این قسمت را پر کنید'),
+        postalCode:Yup.string().required('لطفا این قسمت را پر کنید'),
+    }),
+    phone: Yup.array().of(Yup.string().required('لطفا این قسمت را پر کنید')),
+    favorits: Yup.array().of(Yup.string().required('لطفا این قسمت را پر کنید'))
 })
 
 
 const Registerform = () => {
-    // const formik = useFormik({
-    //     initialValues,
-    //     onSubmit,
-    //     // validate,
-    //     validationSchema
-    // })
-
 
     return (
         <Formik
@@ -53,33 +58,65 @@ const Registerform = () => {
             <div className='auth_container container-fluid d-flex justify-content-center align-items-center w-100 h-100-vh p-0'>
                 <div className="row w-100 justify-content-center align-items-center">
                     <div className='auth_box col-11 col-md-8 col-lg-6 col-xl-4 py-4 px-3'>
-                        <Form>
+                        <Form className='row'>
                             <h1 className='text-center'>
                                 <i className='fas fa-user-plus text-primary'></i>
                             </h1>
                             <div className="mb-3">
                                 <label htmlFor="name" className="form-label">نام</label>
                                 <FastField type="text" className="form-control" id="name" name='name' placeholder="لطفا از حروف لاتین استفاده کنید"/>
-                                <ErrorMessage name='name' component={Personalerror}/>
+                                <ErrorMessage name='name'component={Personalerror} />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="email" className="form-label">ایمیل</label>
                                 <FastField type="email" className="form-control" id="email" name='email'/>
-                                <ErrorMessage name='email'>
-                                    {error=> <small className='d-block text-center text-danger'>{error}</small>}
-                                </ErrorMessage>
+                                <ErrorMessage name='email'component={Personalerror} />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="password" className="form-label">رمز عبور</label>
-                                <FastField name='password'>
-                                    {props => <Personalfield {...props}/>}                                    
-                                </FastField>
+                                <FastField type="password" className="form-control" id="password" name='password'/>
+                                <ErrorMessage name='password'component={Personalerror} />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="password" className="form-label">بیوگرافی</label>
                                 <FastField type="text" className="form-control" id="bio" name='bio' component="textarea"/>
                                 <ErrorMessage name='bio' />
                             </div>
+
+
+
+                            <div className="mb-3 col-6">
+                                <label htmlFor="city" className="form-label">شهر</label>
+                                <FastField type="text" className="form-control" id="city" name='address.city'/>
+                                <ErrorMessage name='address.city'component={Personalerror} />
+                            </div>
+                            <div className="mb-3 col-6">
+                                <label htmlFor="postalCode" className="form-label">کد پستی</label>
+                                <FastField type="text" className="form-control" id="postalCode" name='address.postalCode'/>
+                                <ErrorMessage name='address.postalCode' component={Personalerror}/>
+                            </div>
+
+
+                            <div className="mb-3 col-6">
+                                <label htmlFor="mobilePhone" className="form-label">شماره موبایل</label>
+                                <FastField type="text" className="form-control" id="mobilePhone" name='phone[0]'/>
+                                <ErrorMessage name='phone[0]'component={Personalerror} />
+                            </div>
+                            <div className="mb-3 col-6">
+                                <label htmlFor="telePhone" className="form-label">شماره ثابت</label>
+                                <FastField type="text" className="form-control" id="telePhone" name='phone[1]'/>
+                                <ErrorMessage name='phone[1]' component={Personalerror}/>
+                            </div>
+
+                            <div className="mb-3">
+                                <FieldArray type="text" className="form-control" id="favorits" name='favorits'>
+                                    {props=> <FavoritsField {...props}/>}
+                                </FieldArray>
+
+                            </div>
+
+
+
                             <div className='text-center w-100'>
                                 <button type="submit" className="btn btn-primary">ثبت نام</button>
                             </div>

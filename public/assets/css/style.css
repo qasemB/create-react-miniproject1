@@ -65,6 +65,12 @@ body{
    box-shadow: 0 0 30px rgba(128, 128, 128, 0.219);
 }
 
+.delete_icon{
+    position: absolute;
+    top: 11px;
+    left: 3px;
+}
+
 
 
 
