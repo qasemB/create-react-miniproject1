@@ -16,8 +16,11 @@ const initialValues ={
     phone:['' , ''],
     favorits:['']
 }
-const onSubmit = values=>{
-    console.log(values);
+const onSubmit = (values , submitProps)=>{
+    console.log(submitProps);
+    setTimeout(()=>{
+        submitProps.setSubmitting(false)
+    },5000)
 }
 const validate = values=>{
     let errors = {}
@@ -64,8 +67,7 @@ const Registerform = () => {
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
-        // validateOnBlur={false}
-        // validateOnChange={false}
+        // validateOnMount
         >
 
 
@@ -130,21 +132,21 @@ const Registerform = () => {
                                     <div className="mb-2">
                                         <FieldArray type="text" className="form-control" id="favorits" name='favorits'>
                                             {props=> <FavoritsField {...props}/>}
-                                        </FieldArray>
-        
+                                        </FieldArray>        
                                     </div>
         
-                                    <button className='btn btn-info' type='button' onClick={()=>formik.validateField('bio')}>اعتبارسنجی بیوگرافی</button>
-                                    <button className='btn btn-info' type='button' onClick={()=>formik.validateForm()}>اعتبارسنجی فرم</button>
-        
-                                    <button className='btn btn-success' type='button' onClick={()=>formik.setFieldTouched('bio')}>مشاهده بیوگرافی</button>
-                                    <button className='btn btn-success' type='button' onClick={()=>formik.setTouched({
-                                       name: true,
-                                       email: true 
-                                    })}>مشاهده فرم</button>
-        
                                     <div className='text-center w-100'>
-                                        <button type="submit" className="btn btn-primary">ثبت نام</button>
+                                        <button type="submit" className="btn btn-primary" 
+                                        disabled={ !(formik.dirty && formik.isValid) || formik.isSubmitting}
+                                        >
+                                            {
+                                                formik.isSubmitting ? (
+                                                    <div className="spinner-border" role="status">
+                                                        <span className="visually-hidden">Loading...</span>
+                                                    </div>
+                                                ) : ("ثبت نام")
+                                            }
+                                        </button>
                                     </div>
                                 </Form>
                             </div>
