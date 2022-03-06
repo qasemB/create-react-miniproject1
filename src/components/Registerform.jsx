@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ErrorMessage, FastField, Field, Form, Formik, FieldArray, useFormik } from 'formik'
 import * as Yup from 'yup'
 import Personalerror from './Personalerror';
@@ -17,9 +17,9 @@ const initialValues ={
     favorits:['']
 }
 const onSubmit = (values , submitProps)=>{
-    console.log(submitProps);
     setTimeout(()=>{
         submitProps.setSubmitting(false)
+        submitProps.resetForm();
     },5000)
 }
 const validate = values=>{
@@ -62,17 +62,35 @@ const validateBio = value=>{
 
 const Registerform = () => {
 
+    const [savedData , setSavedData] = useState(null);
+
+    const [myValues , setMyValues] = useState(null);
+
+    const handleSaveData = (formik)=>{
+        localStorage.setItem('savedData' ,  JSON.stringify(formik.values))
+    }
+    
+    const handleGetSaveData = ()=>{
+        setMyValues(savedData)
+    }
+
+    useEffect(()=>{
+        const localSavedData = JSON.parse(localStorage.getItem('savedData'));
+        // console.log(localSavedData);
+        setSavedData(localSavedData);
+    },[])
+
     return (
         <Formik
-        initialValues={initialValues}
+        initialValues={myValues || initialValues}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
+        enableReinitialize
         // validateOnMount
         >
 
 
             {formik=>{
-                console.log(formik);
                 return (
                     <div className='auth_container container-fluid d-flex justify-content-center align-items-center w-100 h-100-vh p-0'>
                         <div className="row w-100 justify-content-center align-items-center">
@@ -147,6 +165,27 @@ const Registerform = () => {
                                                 ) : ("ثبت نام")
                                             }
                                         </button>
+                                        {
+                                            (formik.dirty && formik.isValid) ? (
+                                                <button type='button' className='btn btn-warning mx-3' onClick={()=>handleSaveData(formik)}>
+                                                    ذخیره در این سیستم
+                                                </button>
+                                            ) : null
+                                        }
+                                        {
+                                            savedData ? (
+                                                <button type='button' className='btn btn-success mx-3' onClick={handleGetSaveData}>
+                                                    دریافت آخرین اطلاعات در این سیستم
+                                                </button>
+                                            ) : null
+                                        }
+                                        {
+                                            formik.dirty ? (
+                                                <button type='reset' className='btn btn-danger mt-2 mx-3'>
+                                                    پاکسازی
+                                                </button>
+                                            ) : null
+                                        }
                                     </div>
                                 </Form>
                             </div>
