@@ -3,6 +3,7 @@ import { ErrorMessage, FastField, Field, Form, Formik, FieldArray, useFormik } f
 import * as Yup from 'yup'
 import Personalerror from './Personalerror';
 import FavoritsField from './FavoritsField';
+import Formikcontrol from './formikElements/FormikControl';
 
 const initialValues ={
     name: '',
@@ -99,28 +100,29 @@ const Registerform = () => {
                                     <h1 className='text-center'>
                                         <i className='fas fa-user-plus text-primary'></i>
                                     </h1>
-                                    <div className="mb-2">
-                                        <label htmlFor="name" className="form-label">نام</label>
-                                        <FastField type="text" className="form-control" id="name" name='name' placeholder="لطفا از حروف لاتین استفاده کنید"/>
-                                        <ErrorMessage name='name'component={Personalerror} />
-                                    </div>
-                                    <div className="mb-2">
-                                        <label htmlFor="email" className="form-label">ایمیل</label>
-                                        <FastField type="email" className="form-control" id="email" name='email'/>
-                                        <ErrorMessage name='email'component={Personalerror} />
-                                    </div>
-                                    <div className="mb-2">
-                                        <label htmlFor="password" className="form-label">رمز عبور</label>
-                                        <FastField type="password" className="form-control" id="password" name='password'/>
-                                        <ErrorMessage name='password'component={Personalerror} />
-                                    </div>
-                                    <div className="mb-2">
-                                        <label htmlFor="password" className="form-label">بیوگرافی</label>
-                                        <FastField type="text" className="form-control" id="bio" name='bio' component="textarea"
-                                        validate={validateBio}
-                                        />
-                                        <ErrorMessage name='bio' component={Personalerror}/>
-                                    </div>
+                                    <Formikcontrol
+                                    control="input"
+                                    type="text"
+                                    label="نام"
+                                    name="name"
+                                    />
+                                    <Formikcontrol
+                                    control="input"
+                                    type="email"
+                                    label="ایمیل"
+                                    name="email"
+                                    />
+                                    <Formikcontrol
+                                    control="input"
+                                    type="password"
+                                    label="رمز عبور"
+                                    name="password"
+                                    />
+                                    <Formikcontrol
+                                    control="textarea"
+                                    label="بیوگرافی"
+                                    name="bio"
+                                    />
         
         
         
