@@ -15,7 +15,10 @@ const initialValues ={
         postalCode:''
     },
     phone:['' , ''],
-    favorits:['']
+    favorits:[''],
+    education: 1,
+    gender: 1,
+    skill: []
 }
 const onSubmit = (values , submitProps)=>{
     setTimeout(()=>{
@@ -47,7 +50,8 @@ const validationSchema = Yup.object({
         postalCode:Yup.string().required('لطفا این قسمت را پر کنید'),
     }),
     phone: Yup.array().of(Yup.string().required('لطفا این قسمت را پر کنید')),
-    favorits: Yup.array().of(Yup.string().required('لطفا این قسمت را پر کنید'))
+    favorits: Yup.array().of(Yup.string().required('لطفا این قسمت را پر کنید')),
+    education: Yup.string().required('لطفا این قسمت را پر کنید'),
 })
 
 const validateBio = value=>{
@@ -59,6 +63,25 @@ const validateBio = value=>{
     }
     return error;
 }
+
+const educations = [
+    {id: 1 , value: 'ابتدایی'},
+    {id: 2 , value: 'سیکل'},
+    {id: 3 , value: 'دیپلم'},
+    {id: 4 , value: 'لیسانس'},
+]
+
+const gender = [
+    {id: 1 , value: 'مرد'},
+    {id: 2 , value: 'زن'}
+]
+
+const skills = [
+    {id: 1 , value: 'HTML'},
+    {id: 2 , value: 'CSS'},    
+    {id: 3 , value: 'JS'},
+    {id: 4 , value: 'REACT'}
+]
 
 
 const Registerform = () => {
@@ -123,6 +146,25 @@ const Registerform = () => {
                                     label="بیوگرافی"
                                     name="bio"
                                     />
+                                    <Formikcontrol
+                                    control="select"
+                                    label="تحصیلات"
+                                    name="education"
+                                    options={educations}
+                                    />
+                                    <Formikcontrol
+                                    control="radio"
+                                    label="جنسیت"
+                                    name="gender"
+                                    options={gender}
+                                    />
+                                    <Formikcontrol
+                                    control="checkbox"
+                                    label="تخصص"
+                                    name="skill"
+                                    options={skills}
+                                    />
+
         
         
         
