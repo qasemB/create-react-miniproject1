@@ -1,10 +1,10 @@
 import React from 'react';
-import Registerform from './Registerform';
+import Login from './Login';
 
 const App = ()=>{
     return (
         <div>
-            <Registerform/>
+            <Login/>
         </div>
     ) 
 }
