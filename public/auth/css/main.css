@@ -440,3 +440,30 @@ iframe {
     opacity: 1;
   }
 }
+
+.datePicker{
+  position: absolute;
+  top: 0;
+  height: 49px;
+  background: #e6e6e6;
+  border-radius: 5rem;
+  z-index: 1;
+}
+
+.datePicker select{
+  border: unset !important;
+  background: transparent !important;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  text-align: center;
+}
+
+.datePicker select:focus-visible{
+  outline: unset !important;
+}
+
+.pointer{
+  cursor: pointer !important;
+}

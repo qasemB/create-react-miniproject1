@@ -13,6 +13,7 @@ const initialValues ={
     password: "",
     confirm_password: "",
     auth_mode: "mobile",
+    date: ''
 }
 const onSubmit = (values)=>{
     console.log(values);
@@ -37,12 +38,17 @@ const validationSchema = Yup.object({
     user_name: Yup.string().required('لطفا این قسمت را پر کنید').matches(/^[0-9a-zA-Z]+$/, 'فقط از حروف لاتین و اعداد استفاده کنید'),
     first_name: Yup.string().matches(/^[ابپتثجچهخدذرزسشصظطضعغفقک@-_.:گلمنوهیژئي\s0-9a-zA-Z]+$/, 'فقط از حروف فارسی و لاتین و اعداد و @ : - _ . استفاده کنید'),
     last_name: Yup.string().matches(/^[ابپتثجچهخدذرزسشصظطضعغفقک@-_.:گلمنوهیژئي\s0-9a-zA-Z]+$/, 'فقط از حروف فارسی و لاتین و اعداد و @ : - _ . استفاده کنید'),
+    date: Yup.string().required('لطفا این قسمت را پر کنید')
 })
 
 const authModeValues = [
     {id:"mobile" , value: "موبایل"},
     {id:"email" , value: "ایمیل"},
 ] 
+
+const handleSetDate =(value)=>{
+    console.log(value);
+}
 
 const Register = () => {
     return (
@@ -138,6 +144,15 @@ const Register = () => {
                                         name="confirm_password"
                                         icon="fa fa-lock"
                                         label="تایید رمز عبور"
+                                        />
+
+                                        
+                                        <Formikcontrol
+                                        formik={formik}
+                                        control="date"
+                                        name="date"
+                                        icon="fa fa-calendar"
+                                        label="تاریخ تولد"
                                         />
                                         
                                         <div className="container-login100-form-btn">
