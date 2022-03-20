@@ -467,3 +467,11 @@ iframe {
 .pointer{
   cursor: pointer !important;
 }
+
+.input_file{
+  position: absolute;
+  top: 0;
+  height: 49px;
+  width: 100%;
+  opacity: 0;
+}

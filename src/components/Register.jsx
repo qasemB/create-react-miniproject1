@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import Formikcontrol from './formikComponents/FormikControl';
+import axios from 'axios';
 
 
 const initialValues ={
@@ -13,11 +14,19 @@ const initialValues ={
     password: "",
     confirm_password: "",
     auth_mode: "mobile",
-    date: ''
+    date: '',
+    image: null
 }
 const onSubmit = (values)=>{
     console.log(values);
-    alert("ok")
+    let formData = new FormData();
+    formData.append('user_name' , values.user_name)
+    formData.append('mobile' , values.mobile)
+    formData.append('password' , values.password)
+    formData.append('image' , values.image)
+
+    axios.post('url' , formData , { headers:{ 'Content-Type' : 'multipart/form-data'}})
+    
 }
 const validationSchema = Yup.object({
     email:Yup.string().when('auth_mode' , {
@@ -38,7 +47,11 @@ const validationSchema = Yup.object({
     user_name: Yup.string().required('لطفا این قسمت را پر کنید').matches(/^[0-9a-zA-Z]+$/, 'فقط از حروف لاتین و اعداد استفاده کنید'),
     first_name: Yup.string().matches(/^[ابپتثجچهخدذرزسشصظطضعغفقک@-_.:گلمنوهیژئي\s0-9a-zA-Z]+$/, 'فقط از حروف فارسی و لاتین و اعداد و @ : - _ . استفاده کنید'),
     last_name: Yup.string().matches(/^[ابپتثجچهخدذرزسشصظطضعغفقک@-_.:گلمنوهیژئي\s0-9a-zA-Z]+$/, 'فقط از حروف فارسی و لاتین و اعداد و @ : - _ . استفاده کنید'),
-    date: Yup.string().required('لطفا این قسمت را پر کنید')
+    date: Yup.string().required('لطفا این قسمت را پر کنید'),
+    image: Yup.mixed()
+        .required('لطفا این قسمت را پر کنید')
+        .test("filesize" , "حجم فایل نمیتواند بیشتر 500 کیلوبایت باشد" , value=> value && value.size <= (500*1024))
+        .test("format" , "فرمت فایل باید jpg باشد" , value=> value && value.type === "image/jpeg")
 })
 
 const authModeValues = [
@@ -154,6 +167,18 @@ const Register = () => {
                                         icon="fa fa-calendar"
                                         label="تاریخ تولد"
                                         />
+
+
+
+                                        <Formikcontrol
+                                        formik={formik}
+                                        control="file"
+                                        name="image"
+                                        icon="fa fa-file"
+                                        label="تصویر کاربر"
+                                        />
+
+
                                         
                                         <div className="container-login100-form-btn">
                                             <button className="login100-form-btn">
