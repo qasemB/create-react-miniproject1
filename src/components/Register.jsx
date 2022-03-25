@@ -6,61 +6,40 @@ import axios from 'axios';
 
 
 const initialValues ={
-    user_name: "",
-    first_name: "",
-    last_name: "",
-    email: "",
-    mobile: "",
+    phone: "",
     password: "",
-    confirm_password: "",
-    auth_mode: "mobile",
-    date: '',
-    image: null
+    c_password: "",
 }
 const onSubmit = (values)=>{
     console.log(values);
-    let formData = new FormData();
-    formData.append('user_name' , values.user_name)
-    formData.append('mobile' , values.mobile)
-    formData.append('password' , values.password)
-    formData.append('image' , values.image)
 
-    axios.post('url' , formData , { headers:{ 'Content-Type' : 'multipart/form-data'}})
+    axios.post('http://authservice.azhadev.ir/api/auth/register' , values)
+        .then(res=>{
+            console.log(res);
+
+            localStorage.setItem("token" , res.data.token);
+        })
     
 }
 const validationSchema = Yup.object({
-    email:Yup.string().when('auth_mode' , {
-        is: "email",
-        then: Yup.string().required('لطفا این قسمت را پر کنید').email("لطفا قالب ایمیل را رعایت کنید مثال"),
-    }),
-    mobile:Yup.number().when('auth_mode' , {
-        is: "mobile",
-        then: Yup.number().required('لطفا این قسمت را پر کنید'),
-    }),
+    phone:Yup.number().required('لطفا این قسمت را پر کنید'),
     password: Yup
         .string()
         .required('لطفا این قسمت را پر کنید')
         .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/ , 'حد اقل یک حرف بزرگ و یک حرف کوچک لاتین و اعداد و کارکترهای خاص استفاده کنید'),
-    confirm_password: Yup.string()
+    c_password: Yup.string()
         .oneOf([Yup.ref('password') , ''] , 'با رمز عبور مطابقت ندارد')
-        .required('لطفا این قسمت را پر کنید'),
-    user_name: Yup.string().required('لطفا این قسمت را پر کنید').matches(/^[0-9a-zA-Z]+$/, 'فقط از حروف لاتین و اعداد استفاده کنید'),
-    first_name: Yup.string().matches(/^[ابپتثجچهخدذرزسشصظطضعغفقک@-_.:گلمنوهیژئي\s0-9a-zA-Z]+$/, 'فقط از حروف فارسی و لاتین و اعداد و @ : - _ . استفاده کنید'),
-    last_name: Yup.string().matches(/^[ابپتثجچهخدذرزسشصظطضعغفقک@-_.:گلمنوهیژئي\s0-9a-zA-Z]+$/, 'فقط از حروف فارسی و لاتین و اعداد و @ : - _ . استفاده کنید'),
-    date: Yup.string().required('لطفا این قسمت را پر کنید'),
-    image: Yup.mixed()
         .required('لطفا این قسمت را پر کنید')
-        .test("filesize" , "حجم فایل نمیتواند بیشتر 500 کیلوبایت باشد" , value=> value && value.size <= (500*1024))
-        .test("format" , "فرمت فایل باید jpg باشد" , value=> value && value.type === "image/jpeg")
 })
 
-const authModeValues = [
-    {id:"mobile" , value: "موبایل"},
-    {id:"email" , value: "ایمیل"},
-] 
-
-const handleSetDate =(value)=>{
-    console.log(value);
+const hendleGetUserData = ()=>{
+    axios.get('http://authservice.azhadev.ir/api/auth/user' , {
+        headers:{
+            'Authorization' : `Bearer ${localStorage.getItem('token')}`
+        }
+    }).then(res=>{
+        console.log(res);
+    })
 }
 
 const Register = () => {
@@ -86,62 +65,10 @@ const Register = () => {
                                         formik={formik}
                                         control="input"
                                         type="text"
-                                        name="user_name"
-                                        icon="fa fa-user"
-                                        label="نام کاربری"
-                                        />
-                                        <Formikcontrol
-                                        formik={formik}
-                                        control="input"
-                                        type="text"
-                                        name="first_name"
-                                        icon="fa fa-user"
-                                        label="نام "
-                                        />
-                                        <Formikcontrol
-                                        formik={formik}
-                                        control="input"
-                                        type="text"
-                                        name="last_name"
-                                        icon="fa fa-user"
-                                        label="نام خانوادگی"
-                                        />
-                                        <Formikcontrol
-                                        formik={formik}
-                                        control="radio"
-                                        name="auth_mode"
-                                        label="نوع اعتبار سنجی"
-                                        options={authModeValues}
-                                        />
-
-                                        {
-                                            formik.values.auth_mode=="mobile" ? (
-                                                <Formikcontrol
-                                                formik={formik}
-                                                control="input"
-                                                type="number"
-                                                name="mobile"
-                                                icon="fa fa-phone"
-                                                label="شماره موبایل"
-                                                />                                            
-                                            ) : (
-                                                <Formikcontrol
-                                                formik={formik}
-                                                control="input"
-                                                type="email"
-                                                name="email"
-                                                icon="fa fa-envelope"
-                                                label="ایمیل"
-                                                />
-                                            )
-                                        }
-
-                                        
-
-
-
-
-
+                                        name="phone"
+                                        icon="fa fa-mobile"
+                                        label="شماره تلفن همراه"
+                                        /> 
                                         <Formikcontrol
                                         formik={formik}
                                         control="input"
@@ -154,31 +81,10 @@ const Register = () => {
                                         formik={formik}
                                         control="input"
                                         type="password"
-                                        name="confirm_password"
+                                        name="c_password"
                                         icon="fa fa-lock"
                                         label="تایید رمز عبور"
                                         />
-
-                                        
-                                        <Formikcontrol
-                                        formik={formik}
-                                        control="date"
-                                        name="date"
-                                        icon="fa fa-calendar"
-                                        label="تاریخ تولد"
-                                        />
-
-
-
-                                        <Formikcontrol
-                                        formik={formik}
-                                        control="file"
-                                        name="image"
-                                        icon="fa fa-file"
-                                        label="تصویر کاربر"
-                                        />
-
-
                                         
                                         <div className="container-login100-form-btn">
                                             <button className="login100-form-btn">
@@ -189,6 +95,10 @@ const Register = () => {
                                             <a className="txt2" href="#">
                                                 قبلا ثبت نام کرده ام
                                             </a>
+                                        </div>
+
+                                        <div className='w-100 text-center'>
+                                            <button className='btn btn-info' onClick={hendleGetUserData}>دریافت اطلاعات کاربر</button>
                                         </div>
                                     </Form>
                                     <div className="login100-pic js-tilt" data-tilt>
